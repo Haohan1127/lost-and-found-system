@@ -1,10 +1,17 @@
 import os
+import sys
 from pathlib import Path
 from django.core.exceptions import ImproperlyConfigured
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 DEBUG = os.environ.get("DJANGO_DEBUG", "1") == "1"
 DEMO_MODE = DEBUG and os.environ.get("DJANGO_DEMO_MODE", "1") == "1"
+# 回归测试默认关闭限流，避免跨用例累积状态；限流用例用 override_settings 单独开启。
+TESTING = sys.argv[1:2] == ["test"]
+RATE_LIMIT_ENABLED = (not TESTING) and os.environ.get("DJANGO_RATE_LIMIT", "1") == "1"
+LOGIN_RATE_LIMIT = 10
+BINDING_RATE_LIMIT = 5
+RATE_LIMIT_WINDOW_SECONDS = 60
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "local-claims-demo-only")
 if not DEBUG and SECRET_KEY in {"local-claims-demo-only", "replace-for-deployment"}:
     raise ImproperlyConfigured("非调试环境必须设置 DJANGO_SECRET_KEY")
@@ -28,6 +35,12 @@ LANGUAGE_CODE = "zh-hans"
 TIME_ZONE = "Asia/Shanghai"
 USE_TZ = True
 APPEND_SLASH = False
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "LOCATION": "campus-claims-rate-limit",
+    }
+}
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": ["users.authentication.BearerAuthentication"],
     "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],

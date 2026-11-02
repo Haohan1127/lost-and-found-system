@@ -1,10 +1,5 @@
-from datetime import timezone
-from rest_framework.fields import DateTimeField
+from common.serializers import timestamp
 from users.services import user_summary
-
-
-def timestamp(value):
-    return DateTimeField(default_timezone=timezone.utc).to_representation(value) if value else None
 
 
 def post_summary(post):

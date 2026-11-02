@@ -16,3 +16,28 @@ class AuthSession(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     token_digest = models.CharField(max_length=64, unique=True)
     expires_at = models.DateTimeField()
+
+
+class CampusBinding(models.Model):
+    """校园身份绑定：一用户一条；校区+学号联合唯一。"""
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="campus_binding")
+    campus = models.ForeignKey("catalog.Campus", on_delete=models.PROTECT)
+    student_no = models.CharField(max_length=20)
+    verification_mode = models.CharField(max_length=16, default="demo")
+    verified_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=["campus", "student_no"], name="uniq_campus_student_no")]
+        ordering = ["-verified_at"]
+
+
+class DemoIdentity(models.Model):
+    """演示用一次性校园身份：只存绑定码 SHA-256 摘要，不存明文。"""
+    campus = models.ForeignKey("catalog.Campus", on_delete=models.PROTECT)
+    student_no = models.CharField(max_length=20)
+    code_digest = models.CharField(max_length=64)
+    used_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL, related_name="+")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=["campus", "student_no"], name="uniq_demo_identity")]

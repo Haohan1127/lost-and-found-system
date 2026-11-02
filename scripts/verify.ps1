@@ -12,7 +12,7 @@ try {
     $env:PYTHONUTF8 = '1'
     Invoke-Checked $pythonPath @('backend/manage.py', 'check')
     Invoke-Checked $pythonPath @('backend/manage.py', 'makemigrations', '--check', '--dry-run')
-    Invoke-Checked $pythonPath @('backend/manage.py', 'test', 'tests', '--noinput')
+    Invoke-Checked $pythonPath @('backend/manage.py', 'test', 'tests', 'users.tests', '--noinput')
     Push-Location (Join-Path $projectRoot 'frontend')
     try {
         Invoke-Checked 'npm.cmd' @('test')

@@ -10,3 +10,6 @@ backend/media/
 test-results/
 playwright-report/
 *.log
+.coverage
+.coverage.*
+htmlcov/

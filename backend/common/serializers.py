@@ -1,5 +1,12 @@
 from collections.abc import Mapping
+from datetime import timezone
 from rest_framework import serializers
+from rest_framework.fields import DateTimeField
+
+
+def timestamp(value):
+    """统一以 UTC ISO8601 输出时间；users 与 posts 共用同一格式。"""
+    return DateTimeField(default_timezone=timezone.utc).to_representation(value) if value else None
 
 
 class StrictSerializer(serializers.Serializer):
