@@ -13,3 +13,6 @@ playwright-report/
 .coverage
 .coverage.*
 htmlcov/
+.idea/
+.run/
+*.iml

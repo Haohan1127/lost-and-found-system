@@ -44,7 +44,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\setup.ps1
 
 初始化会：创建项目内 `.venv`、安装后端依赖（默认清华 PyPI 镜像，可用 `PIP_INDEX_URL` 覆盖）、`npm ci`、执行迁移、生成演示数据与演示校园身份。
 
-随后在两个终端分别启动：
+随后在两个终端分别启动（或使用下面的“一键启动”）：
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\start-backend.ps1   # http://127.0.0.1:8000
@@ -53,7 +53,21 @@ powershell -ExecutionPolicy Bypass -File .\scripts\start-frontend.ps1  # http://
 
 打开 <http://127.0.0.1:5173>，未登录时进入登录页（`/login`），可注册新账号或使用演示账号。前端开发服务器把 `/api` 代理到 `127.0.0.1:8000`。
 
-### 2.1 演示数据
+### 2.1 一键启动（Windows 桌面）
+
+项目文件夹位于桌面：`C:\Users\haoha_99nt8ny\Desktop\校园失物招领系统`。不用命令行即可运行：
+
+| 双击文件 | 作用 |
+|---|---|
+| `启动失物招领.bat`（项目根目录 / 桌面同名文件） | 打开“后端 8000”“前端 5173”两个窗口，等待就绪后自动打开 <http://127.0.0.1:5173> |
+| `停止失物招领.bat`（项目根目录 / 桌面同名文件） | 结束占用 8000、5173 的进程并关闭两个服务窗口 |
+| `打开代码-PyCharm.bat`（项目根目录 / 桌面同名文件） | 用 PyCharm 打开本工程；已预置 `.venv` 解释器和“后端 Django (8000) / 前端 Vite (5173)”运行配置 |
+
+> 桌面上的 `启动失物招领系统.bat`、`停止失物招领系统.bat`、`打开失物招领代码.bat` 是对上述脚本的快捷入口。换机器或移动文件夹后，若提示找不到路径，直接在项目根目录双击同名脚本即可。
+>
+> PyCharm 工程配置（`.idea/`、`.run/`、`.iml`）是本机配置，已加入 `.gitignore`，不影响代码仓库内容。
+
+### 2.2 演示数据
 
 `setup.ps1` 依次执行 `seed_demo` 与 `seed_demo_users`：
 
@@ -71,7 +85,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\start-frontend.ps1  # http://
 
 两条命令都幂等：`--reset-codes` 只重置未使用身份的绑定码，不改动已绑定记录、申请与物品状态。
 
-### 2.2 演示 A 模块流程
+### 2.3 演示 A 模块流程
 
 1. 打开 `/register` 注册新账号（注册成功不自动登录，回到 `/login`）。
 2. 用新账号登录 → 顶部出现“个人中心”；认证状态为“未认证”。
