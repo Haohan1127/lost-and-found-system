@@ -128,6 +128,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify.ps1 -Browser
 | A 的前端页面与接口 | `frontend/src/modules/users/` |
 | A 的浏览器验收 | `frontend/tests/e2e/users.spec.js` |
 | C 的认领、沟通与匹配（既有） | `backend/claims/`、`frontend/src/modules/claims/` |
+| 需求地图（Epic/Feature/Story/Task） | `docs/process/项目思维导图-Epic-Feature-Story-Task.md`、`docs/process/backlog.csv` |
 | 公共契约 | [`docs/共同字段与接口约定.md`](docs/共同字段与接口约定.md) |
 
 ## 5. 文档
@@ -140,6 +141,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify.ps1 -Browser
 | [测试计划](docs/test/A-用户管理-测试计划.md) / [测试用例](docs/test/A-用户管理-测试用例.md) / [测试报告](docs/test/A-用户管理-测试报告.md) | 分层策略、TC-A-001～078、实际执行结果与缺陷记录 |
 | [完整性验证报告](docs/verify/A-用户管理-完整性验证报告.md) | 交付物清单、需求追踪、接口逐项核对、验收清单与未覆盖项 |
 | [软件工程过程说明](docs/process/A-软件工程过程说明.md) | 过程模型、阶段产物、评审与质量门禁、度量、风险与变更控制 |
+| [Epic/Feature/Story/Task 思维导图](docs/process/项目思维导图-Epic-Feature-Story-Task.md) | 5 个 Epic、23 个 Feature、40 个 Story、100 个 Task 的四层地图与迭代切分；含 PNG 图与可导入的 backlog.csv |
 | [个人报告](docs/reports/A-用户管理.md) | 课程个人成果与贡献边界 |
 | [项目文件结构说明](docs/项目文件结构说明.md) | 目录职责与 A/B/C 文件归属 |
 

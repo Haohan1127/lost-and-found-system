@@ -1,0 +1,79 @@
+mindmap
+  root((校园失物招领系统))
+    EP-01 用户管理子系统（成员A） ✅
+      FE-01.1 账号注册 ✅
+        US-01.1.1 注册账号与唯一性 ✅
+          用户模型与注册字段校验 ✅
+          注册接口 POST /auth/register（严格校验、409） ✅
+          注册页 /register（前端校验、成功跳登录） ✅
+          注册测试 TC-A-001～007（含并发唯一） ✅
+        US-01.1.2 账号规范化与密码存储 ✅
+          账号统一小写、文本去首尾空白 ✅
+          密码不裁剪、Django 哈希存储 ✅
+          边界测试（长度、字符集、大小写） ✅
+      FE-01.2 登录与退出 ✅
+        US-01.2.1 账号登录 ✅
+          AuthSession 模型与令牌摘要（24h） ✅
+          登录接口 POST /auth/login（统一 401） ✅
+          登录页 /login（回跳 next、错误提示） ✅
+          登录限流 10 次/分/IP（429 + Retry-After） ✅
+          登录测试 TC-A-008～013 ✅
+        US-01.2.2 退出登录 ✅
+          登出接口 POST /auth/logout 撤销当前会话 ✅
+          前端退出清理内存会话（回 /demo 兼容 C） ✅
+          重复登出/旧令牌测试 TC-A-014～020 ✅
+        US-01.2.3 会话与令牌校验 ✅
+          BearerAuthentication（摘要、过期、401） ✅
+          公开接口无效 Bearer 401 + WWW-Authenticate ✅
+          独立会话与撤销回归测试 ✅
+      FE-01.3 校园身份绑定（演示认证） ✅
+        US-01.3.1 演示校园身份绑定 ✅
+          CampusBinding/DemoIdentity 模型与迁移 0002 ✅
+          绑定接口 GET/POST /users/me/campus-binding（事务、409、400） ✅
+          seed_demo_users（一次性码、幂等、--reset-codes） ✅
+          绑定页 /me/campus-binding（已/未绑定、校区降级） ✅
+          绑定测试 TC-A-029～039、并发 TC-A-049 ✅
+        US-01.3.2 认证状态与下游身份能力 ✅
+          is_campus_verified 只读、绑定后置位 ✅
+          require_campus_verified → 403 IDENTITY_REQUIRED ✅
+          UserSummary 公开摘要（4 字段） ✅
+      FE-01.4 个人资料管理 ✅
+        US-01.4.1 查看本人资料 ✅
+          本人资料接口 GET /users/me（UserSelf） ✅
+          个人中心页 /me/profile ✅
+        US-01.4.2 修改本人资料 ✅
+          资料修改接口 PATCH /users/me（未知字段 400） ✅
+          前端校验与 session.user 同步 ✅
+          资料测试 TC-A-021～028 ✅
+      FE-01.5 安全、隐私与限流 ✅
+        US-01.5.1 凭据与隐私安全 ✅
+          密码哈希、令牌摘要、绑定码摘要 ✅
+          学号脱敏（末 4 位）、响应无敏感字段 ✅
+          安全测试（哈希、无明文、500 不泄露） ✅
+        US-01.5.2 严格输入与错误规范 ✅
+          StrictSerializer（未知/只读/重复参数 400） ✅
+          统一 code/message/data/errors 错误封装 ✅
+        US-01.5.3 频率限制 ✅
+          cache.add/incr 原子固定窗口计数 ✅
+          登录/绑定 429 + Retry-After + 测试开关 ✅
+      FE-01.6 初始化、前端框架与工程化 ✅
+        US-01.6.1 演示数据初始化 ✅
+          setup.ps1 串联 migrate + seed_demo + seed_demo_users ✅
+          固定绑定码 DEMO_BINDING_CODE（e2e） ✅
+        US-01.6.2 前端个人中心框架 ✅
+          登录/注册/个人资料/绑定四条页面路由 ✅
+          路由守卫、登录回跳、导航与页脚 ✅
+        US-01.6.3 一键运行与 IDE 配置 ✅
+          启动/停止/PyCharm 打开 .bat 与桌面入口 ✅
+          PyCharm 解释器与运行配置、使用说明 ✅
+      FE-01.7 测试与文档 ✅
+        US-01.7.1 自动化测试体系 ✅
+          后端新增 53 项（总计 105 项含 C 回归） ✅
+          前端新增 26 项（总计 47 项） ✅
+          浏览器新增 1 项（总计 5 项） ✅
+          独立验收脚本 34 项（覆盖率 95%） ✅
+        US-01.7.2 软件工程文档 ✅
+          需求规格说明书（FR12/NFR7/UC9/BR15） ✅
+          概要设计、详细设计、数据库设计 ✅
+          测试计划/用例/报告、完整性验证报告 ✅
+          过程说明、个人报告、README ✅
