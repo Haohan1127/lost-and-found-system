@@ -10,3 +10,8 @@ backend/media/
 test-results/
 playwright-report/
 *.log
+
+# 本机 IDE 配置（PyCharm），不入库
+.idea/
+.run/
+*.iml
