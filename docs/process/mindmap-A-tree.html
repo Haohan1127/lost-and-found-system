@@ -1,168 +1,35 @@
 <!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><style>
 * { box-sizing: border-box; }
-body { margin: 0; padding: 42px 54px 58px; width: 1600px; background: #fff;
-  font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif; color: #263238; }
-h1 { font-size: 33px; margin: 0 0 6px; color: #1b5e20; }
-.sub { color: #607d8b; font-size: 15px; margin-bottom: 14px; }
-.legend { display: flex; gap: 22px; font-size: 13px; color: #455a64; margin: 0 0 10px; }
-.rule { font-size: 12.8px; color: #546e7a; background: #f5f7f5; border-left: 4px solid #81c784;
-  padding: 9px 14px; margin: 0 0 24px; line-height: 1.7; }
-.epic { margin: 0 0 28px; border-left: 10px solid var(--ec); padding-left: 18px; }
-.ehead { display: flex; align-items: center; gap: 12px; background: var(--ec); color: #fff;
-  padding: 10px 16px; border-radius: 8px; margin-bottom: 12px; }
-.ehead .eid { font-weight: 700; font-size: 15px; opacity: .92; }
-.ehead .ename { font-size: 19px; font-weight: 700; }
-.ehead .meta { margin-left: auto; font-size: 12.5px; opacity: .93; }
-.feature { margin: 0 0 15px 12px; border-left: 4px solid #81c784; padding-left: 14px; }
-.fhead { display: flex; align-items: center; gap: 10px; background: #e8f5e9; border-radius: 6px;
-  padding: 7px 12px; margin-bottom: 8px; }
-.fhead .fid { color: #2e7d32; font-weight: 700; font-size: 13px; }
-.fhead .fname { font-size: 15.5px; font-weight: 700; color: #1b5e20; }
-.fhead .st { margin-left: auto; font-size: 12.5px; color: #455a64; }
-.story { margin: 0 0 9px 10px; border-left: 2px dotted #f9a825; padding-left: 13px; }
-.shead { display: flex; align-items: baseline; gap: 9px; padding: 3px 0; }
-.shead .sid { color: #8d6e63; font-weight: 700; font-size: 12.5px; white-space: nowrap; }
-.shead .storytext { font-size: 14.3px; font-weight: 700; color: #4e342e; line-height: 1.55; }
-.shead .st { margin-left: auto; font-size: 12px; color: #6d4c41; white-space: nowrap; }
-.ac { margin: 2px 0 4px 6px; font-size: 12.4px; color: #5d6d6b; line-height: 1.65; }
-.ac .lt { color: #a1887f; font-weight: 600; }
-.tasks { margin: 3px 0 7px 20px; }
-.task { display: flex; gap: 8px; align-items: baseline; font-size: 12.8px; line-height: 1.6; color: #37474f; }
-.task .bar { color: #b0bec5; font-family: Consolas, monospace; }
-.task .tid { color: #78909c; font-family: Consolas, monospace; font-size: 11.5px; white-space: nowrap; }
-.task .prio { margin-left: auto; color: #90a4ae; font-size: 11.5px; white-space: nowrap; }
-.task.done .state { color: #2e7d32; }
-.task.part .state { color: #ef6c00; }
-.task.todo .state { color: #90a4ae; }
-.footer { margin-top: 30px; padding-top: 14px; border-top: 1px solid #e0e0e0;
-  color: #78909c; font-size: 12.5px; line-height: 1.7; }
-</style></head><body>
-<h1>成员 A 用户管理 · 用户故事层级图</h1>
-<div class='sub'>Epic → Feature → 用户故事 → Task（课程项目交付范围）</div>
-<div class='legend'><span>✅ 已完成</span><span>🔶 部分完成</span><span>⬜ 未开始</span><span>Epic → Feature → 用户故事 → Task</span></div>
-<div class='rule'>Feature = 用户可感知、可独立验收的能力；Story = “作为⟨角色⟩，我想要⟨能力⟩，以便⟨价值⟩” + 验收要点；Task = 模型/接口/页面/测试等技术实现。工程类工作放在 EP-05 使能 Epic（非终端用户）。</div>
-<section class='epic' style='--ec:#1b5e20'>
-<div class='ehead'><span class='eid'>EP-01</span><span class='ename'>用户管理</span><span class='meta'>✅ 已完成 · 用户：普通用户（失主/拾获者） · 成员 A · Feature 5 / Story 13 / Task 40</span></div>
-<div class='feature'>
-<div class='fhead'><span class='fid'>FE-01.1</span><span class='fname'>账号注册</span><span class='st'>✅ 已完成</span></div>
-<div class='story'>
-<div class='shead'><span class='sid'>US-01.1.1</span><span class='storytext'>作为新用户，我想要注册一个自己的账号，以便开始使用失物招领功能。</span><span class='st'>✅ 已完成</span></div>
-<div class='ac'><span class='lt'>验收1：</span>账号为 4～32 位字母/数字/下划线，重复注册返回 409　<span class='lt'>验收2：</span>密码 8～64 字符、昵称 1～30 字，非法输入返回 400 字段错误　<span class='lt'>验收3：</span>注册成功返回 201 且不自动登录，响应中不含密码</div>
-<div class='tasks'>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.1.1.1</span><span class='tname'>User 模型与注册字段校验</span><span class='prio'>P0</span></div>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.1.1.2</span><span class='tname'>注册接口 POST /auth/register</span><span class='prio'>P0</span></div>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.1.1.3</span><span class='tname'>注册页 /register（前端校验、成功跳登录）</span><span class='prio'>P1</span></div>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.1.1.4</span><span class='tname'>注册测试 TC-A-001～007</span><span class='prio'>P0</span></div>
-</div></div>
-<div class='story'>
-<div class='shead'><span class='sid'>US-01.1.2</span><span class='storytext'>作为注册用户，我想要账号唯一且不区分大小写，以便不会与他人账号冲突，也能用任意大小写登录。</span><span class='st'>✅ 已完成</span></div>
-<div class='ac'><span class='lt'>验收1：</span>账号统一存小写；Alice_01 与 alice_01 视为同一账号　<span class='lt'>验收2：</span>并发注册同一账号仅一条成功，另一条返回 409</div>
-<div class='tasks'>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.1.2.1</span><span class='tname'>账号小写归一化与文本去空白</span><span class='prio'>P0</span></div>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.1.2.2</span><span class='tname'>数据库唯一约束兜底</span><span class='prio'>P0</span></div>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.1.2.3</span><span class='tname'>并发注册测试</span><span class='prio'>P1</span></div>
-</div></div>
-</div>
-<div class='feature'>
-<div class='fhead'><span class='fid'>FE-01.2</span><span class='fname'>登录与退出</span><span class='st'>✅ 已完成</span></div>
-<div class='story'>
-<div class='shead'><span class='sid'>US-01.2.1</span><span class='storytext'>作为注册用户，我想要用账号密码登录，以便进入系统并使用我的功能。</span><span class='st'>✅ 已完成</span></div>
-<div class='ac'><span class='lt'>验收1：</span>正确凭据返回 200、access_token、expires_at 与本人资料　<span class='lt'>验收2：</span>账号不存在或密码错误统一 401“账号或密码错误”，不泄露账号是否存在</div>
-<div class='tasks'>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.2.1.1</span><span class='tname'>AuthSession 模型与令牌签发</span><span class='prio'>P0</span></div>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.2.1.2</span><span class='tname'>登录接口 POST /auth/login（统一 401）</span><span class='prio'>P0</span></div>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.2.1.3</span><span class='tname'>登录页 /login（错误提示、回跳）</span><span class='prio'>P1</span></div>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.2.1.4</span><span class='tname'>登录测试 TC-A-008～013</span><span class='prio'>P0</span></div>
-</div></div>
-<div class='story'>
-<div class='shead'><span class='sid'>US-01.2.2</span><span class='storytext'>作为已登录用户，我想要安全退出登录，以便在公用电脑上保护我的账号。</span><span class='st'>✅ 已完成</span></div>
-<div class='ac'><span class='lt'>验收1：</span>退出后当前令牌立即失效（401），同一账号的其他会话不受影响　<span class='lt'>验收2：</span>重复退出或使用已失效令牌返回 401</div>
-<div class='tasks'>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.2.2.1</span><span class='tname'>登出接口 POST /auth/logout</span><span class='prio'>P0</span></div>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.2.2.2</span><span class='tname'>前端清理内存会话（回 /demo 兼容 C）</span><span class='prio'>P1</span></div>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.2.2.3</span><span class='tname'>登出与旧令牌测试 TC-A-014～020</span><span class='prio'>P0</span></div>
-</div></div>
-<div class='story'>
-<div class='shead'><span class='sid'>US-01.2.3</span><span class='storytext'>作为用户，我想要登录状态在 24 小时后失效且可被撤销，以便账号密码泄露时减少损失。</span><span class='st'>✅ 已完成</span></div>
-<div class='ac'><span class='lt'>验收1：</span>服务端只保存令牌摘要，24 小时过期　<span class='lt'>验收2：</span>缺失、伪造或过期令牌返回 401；公开接口携带无效令牌也返回 401</div>
-<div class='tasks'>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.2.3.1</span><span class='tname'>BearerAuthentication（SHA-256 摘要校验）</span><span class='prio'>P0</span></div>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.2.3.2</span><span class='tname'>WWW-Authenticate 与无效令牌处理</span><span class='prio'>P1</span></div>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.2.3.3</span><span class='tname'>独立会话、撤销与过期测试</span><span class='prio'>P1</span></div>
-</div></div>
-<div class='story'>
-<div class='shead'><span class='sid'>US-01.2.4</span><span class='storytext'>作为用户，我想要系统限制登录尝试频率，以便我的密码不会被暴力破解。</span><span class='st'>✅ 已完成</span></div>
-<div class='ac'><span class='lt'>验收1：</span>同一来源 IP 登录超过 10 次/分钟返回 429 + Retry-After　<span class='lt'>验收2：</span>时间窗口结束后自动恢复</div>
-<div class='tasks'>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.2.4.1</span><span class='tname'>固定窗口限流（cache.add/incr 原子计数）</span><span class='prio'>P1</span></div>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.2.4.2</span><span class='tname'>登录限流测试与 Retry-After</span><span class='prio'>P1</span></div>
-</div></div>
-</div>
-<div class='feature'>
-<div class='fhead'><span class='fid'>FE-01.3</span><span class='fname'>校园身份认证（演示认证）</span><span class='st'>✅ 已完成</span></div>
-<div class='story'>
-<div class='shead'><span class='sid'>US-01.3.1</span><span class='storytext'>作为新用户，我想要用校园身份完成绑定认证，以便具备发布信息与发起认领的资格。</span><span class='st'>✅ 已完成</span></div>
-<div class='ac'><span class='lt'>验收1：</span>只接受预置的“校区 + 学号 + 一次性绑定码”，不收集真实证件　<span class='lt'>验收2：</span>成功 201、学号脱敏展示、标记为演示认证　<span class='lt'>验收3：</span>绑定码错误 400 归 binding_code；重复绑定或身份被占用 409；失败无副作用</div>
-<div class='tasks'>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.3.1.1</span><span class='tname'>CampusBinding/DemoIdentity 模型与迁移 0002</span><span class='prio'>P0</span></div>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.3.1.2</span><span class='tname'>绑定接口 GET/POST /users/me/campus-binding</span><span class='prio'>P0</span></div>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.3.1.3</span><span class='tname'>seed_demo_users（一次性码、幂等、--reset-codes）</span><span class='prio'>P0</span></div>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.3.1.4</span><span class='tname'>绑定页 /me/campus-binding（表单/已绑定/校区降级）</span><span class='prio'>P1</span></div>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.3.1.5</span><span class='tname'>绑定测试 TC-A-029～039、并发 TC-A-049</span><span class='prio'>P0</span></div>
-</div></div>
-<div class='story'>
-<div class='shead'><span class='sid'>US-01.3.2</span><span class='storytext'>作为已认证用户，我想要查看认证状态与脱敏学号，以便确认认证生效且学号不被泄露。</span><span class='st'>✅ 已完成</span></div>
-<div class='ac'><span class='lt'>验收1：</span>返回校区、脱敏学号（仅末 4 位）、认证方式与绑定时间　<span class='lt'>验收2：</span>未绑定时返回 null；认证标记不能由客户端写入</div>
-<div class='tasks'>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.3.2.1</span><span class='tname'>认证状态只读与绑定后置位</span><span class='prio'>P0</span></div>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.3.2.2</span><span class='tname'>学号脱敏输出</span><span class='prio'>P0</span></div>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.3.2.3</span><span class='tname'>绑定查看接口测试</span><span class='prio'>P1</span></div>
-</div></div>
-<div class='story'>
-<div class='shead'><span class='sid'>US-01.3.3</span><span class='storytext'>作为未认证用户，我想要在发布/认领时被明确阻止并提示先认证，以便知道下一步该做什么。</span><span class='st'>✅ 已完成</span></div>
-<div class='ac'><span class='lt'>验收1：</span>未认证调用认领接口返回 403 IDENTITY_REQUIRED　<span class='lt'>验收2：</span>完成绑定后同一操作成功</div>
-<div class='tasks'>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.3.3.1</span><span class='tname'>require_campus_verified（403）</span><span class='prio'>P0</span></div>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.3.3.2</span><span class='tname'>与 C 认领流程的集成测试</span><span class='prio'>P0</span></div>
-</div></div>
-</div>
-<div class='feature'>
-<div class='fhead'><span class='fid'>FE-01.4</span><span class='fname'>个人中心</span><span class='st'>✅ 已完成</span></div>
-<div class='story'>
-<div class='shead'><span class='sid'>US-01.4.1</span><span class='storytext'>作为用户，我想要在个人中心查看账号与认证信息，以便了解自己的账号状态。</span><span class='st'>✅ 已完成</span></div>
-<div class='ac'><span class='lt'>验收1：</span>返回本人资料 8 个字段，不含密码或哈希　<span class='lt'>验收2：</span>页面展示账号、注册时间、认证状态与资料入口</div>
-<div class='tasks'>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.4.1.1</span><span class='tname'>本人资料接口 GET /users/me</span><span class='prio'>P0</span></div>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.4.1.2</span><span class='tname'>个人中心页 /me/profile</span><span class='prio'>P1</span></div>
-</div></div>
-<div class='story'>
-<div class='shead'><span class='sid'>US-01.4.2</span><span class='storytext'>作为用户，我想要修改昵称与简介，以便在认领沟通中被对方认出。</span><span class='st'>✅ 已完成</span></div>
-<div class='ac'><span class='lt'>验收1：</span>仅可修改昵称和简介，至少提交一个字段；空对象或未知字段返回 400　<span class='lt'>验收2：</span>保存后页面与顶部昵称同步，重新登录后仍保留</div>
-<div class='tasks'>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.4.2.1</span><span class='tname'>资料修改接口 PATCH /users/me</span><span class='prio'>P0</span></div>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.4.2.2</span><span class='tname'>前端校验与 session.user 同步</span><span class='prio'>P1</span></div>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.4.2.3</span><span class='tname'>资料测试 TC-A-021～028</span><span class='prio'>P0</span></div>
-</div></div>
-</div>
-<div class='feature'>
-<div class='fhead'><span class='fid'>FE-01.5</span><span class='fname'>账号安全与隐私</span><span class='st'>✅ 已完成</span></div>
-<div class='story'>
-<div class='shead'><span class='sid'>US-01.5.1</span><span class='storytext'>作为用户，我想要我的密码、学号和令牌被安全保存且不公开，以便个人隐私得到保护。</span><span class='st'>✅ 已完成</span></div>
-<div class='ac'><span class='lt'>验收1：</span>密码哈希存储、令牌只存摘要、绑定码只存摘要　<span class='lt'>验收2：</span>公开用户摘要只含 id、昵称、认证状态、认证方式　<span class='lt'>验收3：</span>任何响应都不出现密码、哈希、学号明文或绑定码</div>
-<div class='tasks'>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.5.1.1</span><span class='tname'>密码哈希、令牌与绑定码摘要</span><span class='prio'>P0</span></div>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.5.1.2</span><span class='tname'>学号脱敏与公开摘要范围</span><span class='prio'>P0</span></div>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.5.1.3</span><span class='tname'>安全测试（无明文、500 不泄露）</span><span class='prio'>P0</span></div>
-</div></div>
-<div class='story'>
-<div class='shead'><span class='sid'>US-01.5.2</span><span class='storytext'>作为用户，我想要系统拒绝非法或越权字段的请求，以便我的资料与认证状态不会被篡改。</span><span class='st'>✅ 已完成</span></div>
-<div class='ac'><span class='lt'>验收1：</span>未知字段、只读字段、重复参数、非对象 JSON 一律 400　<span class='lt'>验收2：</span>is_campus_verified、username 等不可由客户端直接写入</div>
-<div class='tasks'>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.5.2.1</span><span class='tname'>StrictSerializer 严格字段白名单</span><span class='prio'>P1</span></div>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.5.2.2</span><span class='tname'>统一 code/message/data/errors 错误封装</span><span class='prio'>P1</span></div>
-<div class='task done'><span class='bar'>├─</span><span class='state'>✅</span><span class='tid'>TK-01.5.2.3</span><span class='tname'>只读字段与越权测试</span><span class='prio'>P0</span></div>
-</div></div>
-</div>
-</section>
-<div class='footer'>统计：Epic 1 · Feature 5 · 用户故事 13 · Task 40。状态以仓库实际实现与测试结果为准（A、C 已交付；B 按共同契约拆解但大多未实现；EP-04 范围外）。生成日期 2026-11-05。</div>
-</body></html>
+body { margin: 0; background: #fbfcfe; font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif; }
+#map { display: inline-block; padding: 34px 44px; background: #fbfcfe; }
+.tree, .children { display: flex; align-items: center; }
+.children { flex-direction: column; justify-content: center; position: relative; margin-left: 46px; padding: 1px 0; }
+.children::before { content: ""; position: absolute; left: -23px; top: 16px; bottom: 16px; border-left: 2px solid #dbe3ee; }
+.children > .node::before { content: ""; position: absolute; left: -23px; top: 50%; width: 23px; border-top: 2px solid #dbe3ee; }
+.node { display: flex; align-items: center; position: relative; margin: 4px 0; }
+.card { position: relative; border-radius: 9px; padding: 6px 11px 5px; width: 246px; background: #fff;
+  border: 1px solid #e4e9f1; box-shadow: 0 1px 4px rgba(16, 24, 40, .05); }
+.card.has-children::after { content: ""; position: absolute; left: 100%; top: 50%; width: 23px; border-top: 2px solid #dbe3ee; }
+.card.has-children > .count { position: absolute; left: 100%; top: 50%; margin-left: 12px; transform: translateY(-50%);
+  width: 20px; height: 20px; border-radius: 50%; background: #fff; border: 1px solid #cbd5e1; color: #64748b;
+  font-size: 10.5px; display: flex; align-items: center; justify-content: center; z-index: 2; }
+.card.epic { width: 222px; background: #eef4ff; border-color: #c9d9ff; }
+.card.feature { width: 232px; background: #e9fbf7; border-color: #bdeee4; }
+.card.story { width: 240px; background: #f6f7f9; border-color: #e2e6ec; }
+.card.task { width: 288px; background: #ffffff; border-color: #e8ebf0; }
+.badge { display: inline-block; font-size: 9.5px; line-height: 14px; padding: 0 6px; border-radius: 4px;
+  color: #fff; font-weight: 600; letter-spacing: .3px; }
+.card.epic .badge { background: #5b7cfa; }
+.card.feature .badge { background: #18b6a6; }
+.card.story .badge { background: #8a94a6; }
+.card.task .badge { background: #aab2c0; }
+.title { font-size: 13px; font-weight: 700; color: #1f2d3d; margin: 3px 0 1px; line-height: 1.35; }
+.meta { font-size: 10.8px; color: #64748b; line-height: 1.45; }
+.meta .ok { color: #2e7d32; }
+.meta .part { color: #ef6c00; }
+.meta .todo { color: #94a3b8; }
+.sep { color: #cbd5e1; margin: 0 4px; }
+.rootcard { width: 206px; background: #eef1f6; border-color: #d9dfe8; }
+.rootcard .title { font-size: 13.5px; }
+.rootcard .meta { font-size: 10.8px; }
+</style></head><body><div id='map'><div class='tree'><div class='node'><div class='card rootcard has-children'><span class='badge' style='background:#64748b'>思维导图</span><div class='title'>思维导图-需求规划</div><div class='meta'>校园失物招领系统 · 工作项</div><span class='count'>1</span></div><div class='children'><div class='node'><div class='card epic has-children'><span class='badge'>Epic</span><div class='title'>账号与身份管理</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>用户：普通用户（失主/拾获者）</div><span class='count'>5</span></div><div class='children'><div class='node'><div class='card feature has-children'><span class='badge'>Feature</span><div class='title'>账号注册</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A</div><span class='count'>2</span></div><div class='children'><div class='node'><div class='card story has-children'><span class='badge'>Story</span><div class='title'>注册账号</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>验收 3 条</div><span class='count'>4</span></div><div class='children'><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>User 模型与注册字段校验</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P0</div></div></div><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>注册接口 POST /auth/register</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P0</div></div></div><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>注册页 /register（前端校验、成功跳登录）</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P1</div></div></div><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>注册测试 TC-A-001～007</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P0</div></div></div></div></div><div class='node'><div class='card story has-children'><span class='badge'>Story</span><div class='title'>账号唯一性校验</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>验收 2 条</div><span class='count'>3</span></div><div class='children'><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>账号小写归一化与文本去空白</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P0</div></div></div><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>数据库唯一约束兜底</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P0</div></div></div><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>并发注册测试</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P1</div></div></div></div></div></div></div><div class='node'><div class='card feature has-children'><span class='badge'>Feature</span><div class='title'>登录与退出</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A</div><span class='count'>4</span></div><div class='children'><div class='node'><div class='card story has-children'><span class='badge'>Story</span><div class='title'>账号密码登录</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>验收 2 条</div><span class='count'>4</span></div><div class='children'><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>AuthSession 模型与令牌签发</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P0</div></div></div><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>登录接口 POST /auth/login（统一 401）</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P0</div></div></div><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>登录页 /login（错误提示、回跳）</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P1</div></div></div><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>登录测试 TC-A-008～013</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P0</div></div></div></div></div><div class='node'><div class='card story has-children'><span class='badge'>Story</span><div class='title'>安全退出登录</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>验收 2 条</div><span class='count'>3</span></div><div class='children'><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>登出接口 POST /auth/logout</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P0</div></div></div><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>前端清理内存会话（回 /demo 兼容 C）</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P1</div></div></div><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>登出与旧令牌测试 TC-A-014～020</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P0</div></div></div></div></div><div class='node'><div class='card story has-children'><span class='badge'>Story</span><div class='title'>登录状态24h可撤销</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>验收 2 条</div><span class='count'>3</span></div><div class='children'><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>BearerAuthentication（SHA-256 摘要校验）</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P0</div></div></div><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>WWW-Authenticate 与无效令牌处理</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P1</div></div></div><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>独立会话、撤销与过期测试</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P1</div></div></div></div></div><div class='node'><div class='card story has-children'><span class='badge'>Story</span><div class='title'>限制登录尝试频率</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>验收 2 条</div><span class='count'>2</span></div><div class='children'><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>固定窗口限流（cache.add/incr 原子计数）</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P1</div></div></div><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>登录限流测试与 Retry-After</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P1</div></div></div></div></div></div></div><div class='node'><div class='card feature has-children'><span class='badge'>Feature</span><div class='title'>校园身份认证</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A</div><span class='count'>3</span></div><div class='children'><div class='node'><div class='card story has-children'><span class='badge'>Story</span><div class='title'>绑定校园身份</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>验收 3 条</div><span class='count'>5</span></div><div class='children'><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>CampusBinding/DemoIdentity 模型与迁移 0002</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P0</div></div></div><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>绑定接口 GET/POST /users/me/campus-binding</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P0</div></div></div><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>seed_demo_users（一次性码、幂等、--reset-codes）</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P0</div></div></div><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>绑定页 /me/campus-binding（表单/已绑定/校区降级）</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P1</div></div></div><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>绑定测试 TC-A-029～039、并发 TC-A-049</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P0</div></div></div></div></div><div class='node'><div class='card story has-children'><span class='badge'>Story</span><div class='title'>查看认证状态</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>验收 2 条</div><span class='count'>3</span></div><div class='children'><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>认证状态只读与绑定后置位</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P0</div></div></div><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>学号脱敏输出</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P0</div></div></div><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>绑定查看接口测试</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P1</div></div></div></div></div><div class='node'><div class='card story has-children'><span class='badge'>Story</span><div class='title'>未认证操作拦截</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>验收 2 条</div><span class='count'>2</span></div><div class='children'><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>require_campus_verified（403）</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P0</div></div></div><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>与 C 认领流程的集成测试</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P0</div></div></div></div></div></div></div><div class='node'><div class='card feature has-children'><span class='badge'>Feature</span><div class='title'>个人中心</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A</div><span class='count'>2</span></div><div class='children'><div class='node'><div class='card story has-children'><span class='badge'>Story</span><div class='title'>查看个人资料</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>验收 2 条</div><span class='count'>2</span></div><div class='children'><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>本人资料接口 GET /users/me</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P0</div></div></div><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>个人中心页 /me/profile</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P1</div></div></div></div></div><div class='node'><div class='card story has-children'><span class='badge'>Story</span><div class='title'>修改昵称与简介</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>验收 2 条</div><span class='count'>3</span></div><div class='children'><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>资料修改接口 PATCH /users/me</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P0</div></div></div><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>前端校验与 session.user 同步</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P1</div></div></div><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>资料测试 TC-A-021～028</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P0</div></div></div></div></div></div></div><div class='node'><div class='card feature has-children'><span class='badge'>Feature</span><div class='title'>账号安全与隐私</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A</div><span class='count'>2</span></div><div class='children'><div class='node'><div class='card story has-children'><span class='badge'>Story</span><div class='title'>保护账号凭据</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>验收 3 条</div><span class='count'>3</span></div><div class='children'><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>密码哈希、令牌与绑定码摘要</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P0</div></div></div><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>学号脱敏与公开摘要范围</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P0</div></div></div><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>安全测试（无明文、500 不泄露）</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P0</div></div></div></div></div><div class='node'><div class='card story has-children'><span class='badge'>Story</span><div class='title'>拒绝越权字段</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>验收 2 条</div><span class='count'>3</span></div><div class='children'><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>StrictSerializer 严格字段白名单</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P1</div></div></div><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>统一 code/message/data/errors 错误封装</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P1</div></div></div><div class='node'><div class='card task'><span class='badge'>Task</span><div class='title'>只读字段与越权测试</div><div class='meta'><span class='done'>✅ 已完成</span><span class='sep'>|</span>成员 A<span class='sep'>|</span>P0</div></div></div></div></div></div></div></div></div></div></div></div></div></body></html>
