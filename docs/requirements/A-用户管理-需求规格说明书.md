@@ -611,3 +611,12 @@ T02～T12 的其他场景由 B/C 负责，A 仅提供身份与公开摘要能力
 | v0.1 | 2026-11-02 | 依据契约第 2 节建立需求编号与初稿 | 成员 A | 形成 FR/NFR 清单 |
 | v1.0 | 2026-11-02 | 补齐 9 个用例规约、15 条业务规则、追踪矩阵与 T01/T13 映射；与契约第 2 节编号对齐 | 成员 A | 可作为设计与测试基线 |
 | v1.1 | 2026-11-02 | 绑定“身份被他人占用”改为 409 `DUPLICATE_RESOURCE`（CR-A-08，Lead 复核裁定）；400 仅保留身份不存在/绑定码摘要不匹配；同步 UC-A-07、FR-A-07、接口摘要、AC-A-06 | 成员 A | 测试用例 TC-A-033/TC-A-049、过程说明与设计文档同步 |
+| v1.2 | 2026-11-09 | 按契约 v0.3 新增 FR-A-13“我的发布”：A 直接查询 B 的 `Post` 表，提供 `GET /users/me/posts` 与 `/me/posts` 页面 | 成员 A | 新增接口、页面、后端 6 项/前端 5 项测试 |
+
+## 15. 附录：契约 v0.3 增量需求（2026-11-09）
+
+| 编号 | 需求 | 描述 | 验收标准 | 设计/代码 | 测试 |
+|---|---|---|---|---|---|
+| FR-A-13 | 我的发布 | 登录用户可在个人中心查看本人发布的寻物/招领信息，支持类型/状态筛选与分页；按契约 v0.3，由 A 直接查询 B 的 `Post` 表（`publisher_id` 过滤），B 不再提供该列表接口 | 1. 未登录 401；2. 仅返回本人发布，默认包含本人全部状态；3. 返回 `PostSummary` 结构，公开用户摘要不含账号；4. `post_type`/`status` 非法值 400；5. 分页结构与排序稳定（`-created_at,-id`）；6. 前端 `/me/posts` 可筛选、翻页、展示空态与错误重试 | `backend/users/{serializers,selectors,views,urls}.py`、`frontend/src/modules/users/{api.js,pages/MyPostsPage.vue,routes.js}`、`App.vue`、`ProfilePage.vue` | `backend/users/tests/test_my_posts.py`（6 项）、`frontend/src/modules/users/tests/my-posts.spec.js`（5 项） |
+
+补充说明：契约 v0.3 中的发布权限拆分（`lost` 仅登录、`found` 需认证）、`lost` 认领流程、图片 `alt_text`、`resolve_note/reopen`、`request_id` 幂等属于 B/C 的实现范围，A 模块只提供认证状态（`is_campus_verified`）并在本文第 3.2 节约定范围内保持不变。

@@ -25,3 +25,16 @@ def get_demo_identity(campus, student_no, lock=False):
     if lock:
         queryset = queryset.select_for_update()
     return queryset.first()
+
+
+def my_posts(user, query):
+    """我的发布：按契约 v0.3 由 A 直接查询 B 的 Post 表（同库直查），默认包含本人全部状态。"""
+    from posts.models import Post
+    queryset = (Post.objects.filter(publisher=user)
+                .select_related("category", "location", "location__campus")
+                .order_by("-created_at", "-id"))
+    if "post_type" in query:
+        queryset = queryset.filter(post_type=query["post_type"])
+    if "status" in query:
+        queryset = queryset.filter(status=query["status"])
+    return queryset

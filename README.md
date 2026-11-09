@@ -15,7 +15,8 @@
 | 注册登录 | 账号注册（4～32 位字母/数字/下划线、唯一、统一小写）、登录（24 小时可撤销 Bearer 令牌）、退出登录（仅撤销当前会话） |
 | 校园身份绑定 | 登录后使用预置“校区 + 学号 + 一次性绑定码”完成**演示认证**；未绑定返回 `null`，已绑定返回末 4 位脱敏学号；绑定后置认证标记，供 B/C 校验 |
 | 个人资料管理 | 查看/修改本人昵称（1～30 字）与简介（0～200 字）；账号、认证标记等只读字段不可由客户端写入 |
-| 个人中心框架 | `/me/profile`、`/me/campus-binding` 页面框架；登录守卫与回跳；B/C 的“我的发布/我的认领”由对应成员接入 |
+| 个人中心框架 | `/me/profile`、`/me/campus-binding`、`/me/posts` 页面框架；登录守卫与回跳；C 的“我的认领/收到的申请”由 C 接入 |
+| 我的发布（契约 v0.3） | `/me/posts` 页面 + `GET /users/me/posts`；按契约 v0.3 由 A 直接查询 B 的 `Post` 表（`publisher_id` 过滤），支持类型/状态筛选与分页，默认包含本人全部状态 |
 
 后端接口（前缀 `/api/v1`，无结尾斜杠）：
 
@@ -26,6 +27,7 @@
 | POST | `/auth/logout` | 登录 | 撤销当前令牌 |
 | GET / PATCH | `/users/me` | 登录 | 查看 / 修改本人资料（`nickname`、`bio`） |
 | GET / POST | `/users/me/campus-binding` | 登录 | 查询绑定（未绑定 `null`）/ 提交绑定 |
+| GET | `/users/me/posts` | 登录 | 我的发布：`post_type`、`status`、`page`、`page_size`，分页 `PostSummary`（契约 v0.3，A 直查 B 的 Post 表） |
 
 响应统一 `code/message/data`，错误另含 `errors` 对象；错误码与字段约束见共同契约第 2、3.2、3.3、4 节。
 
@@ -142,6 +144,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify.ps1 -Browser
 | [完整性验证报告](docs/verify/A-用户管理-完整性验证报告.md) | 交付物清单、需求追踪、接口逐项核对、验收清单与未覆盖项 |
 | [软件工程过程说明](docs/process/A-软件工程过程说明.md) | 过程模型、阶段产物、评审与质量门禁、度量、风险与变更控制 |
 | [第二版迭代记录](docs/process/第二版迭代记录.md) | 认证入口、认领未认证引导的修复说明与验证结果 |
+| [第三版迭代记录](docs/process/第三版迭代记录.md) | 契约 v0.3 变更说明；A 新增“我的发布”接口与页面、身份权限相关调整 |
 | [Epic/Feature/Story/Task 思维导图（v3 · CodeArts 风格）](docs/process/项目思维导图-Epic-Feature-Story-Task.md) | 产品 Backlog：4 个 Epic、21 个 Feature、40 个用户故事、103 个 Task；卡片式思维导图（类型徽标/状态/负责人/子项计数），并附 CodeArts 可导入 Excel 与 backlog.csv |
 | [个人报告](docs/reports/A-用户管理.md) | 课程个人成果与贡献边界 |
 | [项目文件结构说明](docs/项目文件结构说明.md) | 目录职责与 A/B/C 文件归属 |

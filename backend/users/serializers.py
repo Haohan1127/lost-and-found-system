@@ -2,7 +2,7 @@
 from django.core.validators import RegexValidator
 from rest_framework import serializers
 
-from common.serializers import IdField, StrictSerializer, StringField, timestamp
+from common.serializers import IdField, PageQuery, StrictSerializer, StringField, timestamp
 
 USERNAME_VALIDATOR = RegexValidator(r"^[A-Za-z0-9_]{4,32}$", "账号需为 4～32 位字母、数字或下划线")
 STUDENT_NO_VALIDATOR = RegexValidator(r"^[A-Za-z0-9]{6,20}$", "学号需为 6～20 位字母或数字")
@@ -35,6 +35,12 @@ class CampusBindingInput(StrictSerializer):
     binding_code = StringField(min_length=6, max_length=64, trim_whitespace=False)
 
 
+class MyPostsQuery(PageQuery):
+    """我的发布列表查询（契约 v0.3：A 直接查询 B 的 Post 表，B 不再提供列表接口）。"""
+    post_type = serializers.ChoiceField(choices=["lost", "found"], required=False)
+    status = serializers.ChoiceField(choices=["open", "in_handover", "completed", "withdrawn"], required=False)
+
+
 def mask_student_no(student_no):
     """学号脱敏：保留末 4 位，其余替换为 *（20260001 -> ****0001）。"""
     keep = student_no[-4:]
@@ -56,3 +62,9 @@ def binding_view(binding):
         "campus_id": binding.campus_id, "student_no_masked": mask_student_no(binding.student_no),
         "verification_mode": binding.verification_mode, "verified_at": timestamp(binding.verified_at),
     }
+
+
+def my_post_summary(post):
+    """“我的发布”使用 B 的 PostSummary 结构；延迟导入避免 users/posts 循环依赖。"""
+    from posts.serializers import post_summary
+    return post_summary(post)

@@ -26,6 +26,7 @@ function makeRouter() {
       { path: '/', component: { template: '<div />' } },
       { path: '/demo', component: { template: '<div />' } },
       { path: '/me/profile', component: ProfilePage },
+      { path: '/me/posts', component: { template: '<div />' } },
       { path: '/me/campus-binding', component: { template: '<div />' } },
     ],
   })
