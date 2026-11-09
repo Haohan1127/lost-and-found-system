@@ -29,14 +29,15 @@ function makeRouter() {
       { path: '/', component: { template: '<div />' } },
       { path: '/demo', component: { template: '<div />' } },
       { path: '/me/profile', component: { template: '<div />' } },
+      { path: '/claims/new', component: { template: '<div />' } },
       { path: '/me/campus-binding', component: CampusBindingPage },
     ],
   })
 }
 
-async function mountPage() {
+async function mountPage(query = '') {
   const router = makeRouter()
-  await router.push('/me/campus-binding')
+  await router.push(`/me/campus-binding${query}`)
   await router.isReady()
   const wrapper = mount(CampusBindingPage, { global: { plugins: [router] } })
   await flushPromises()
@@ -146,5 +147,18 @@ describe('校园身份绑定页', () => {
     finish(bindingView)
     await flushPromises()
     expect(wrapper.find('form').exists()).toBe(false)
+  })
+
+  it('认证完成后提供返回原操作页面的入口（next）', async () => {
+    getBinding.mockResolvedValueOnce(null).mockResolvedValue(bindingView)
+    bindCampus.mockResolvedValue(bindingView)
+    me.mockResolvedValue({ ...user, is_campus_verified: true, verification_mode: 'demo' })
+    const { wrapper } = await mountPage('?next=/claims/new?post_id=9')
+    await fillForm(wrapper)
+    await wrapper.get('form').trigger('submit')
+    await flushPromises()
+    expect(wrapper.text()).toContain('认证完成，继续刚才的操作')
+    const link = wrapper.findAll('a').find(item => item.text().includes('认证完成'))
+    expect(link.attributes('href')).toContain('/claims/new?post_id=9')
   })
 })

@@ -1,11 +1,13 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
+import { useRoute } from 'vue-router'
 import { session } from '../../../shared/session.js'
 import { errorText } from '../../../shared/http.js'
 import { datetime } from '../../../shared/utils/datetime.js'
 import { bindCampus, campuses as fetchCampuses, getBinding, me } from '../api.js'
 import CampusBindingForm from '../components/CampusBindingForm.vue'
 
+const route = useRoute()
 const binding = ref(null)
 const campusOptions = ref([])
 const campusFallback = ref(false)
@@ -17,6 +19,13 @@ const error = ref('')
 const success = ref('')
 const fieldErrors = ref({})
 const BINDING_FIELDS = ['campus_id', 'student_no', 'binding_code']
+
+// 只接受站内相对路径，认证完成后可回到刚才被拦截的操作（如申请认领）。
+function safeNext(value) {
+  if (typeof value !== 'string' || !value.startsWith('/') || value.startsWith('//')) return null
+  return value
+}
+const nextPath = computed(() => safeNext(route.query.next))
 
 function normalizeCampuses(data) {
   const list = Array.isArray(data) ? data : (Array.isArray(data?.items) ? data.items : [])
@@ -125,6 +134,7 @@ async function submit(payload) {
         <div><dt>绑定时间</dt><dd>{{ datetime(binding.verified_at) }}</dd></div>
       </dl>
       <p class="notice">第一版为演示认证，不是真实学校认证，仅用于课程演示。绑定后不支持解绑。</p>
+      <p v-if="nextPath" class="muted"><RouterLink class="button" :to="nextPath">认证完成，继续刚才的操作</RouterLink></p>
       <p class="muted"><RouterLink to="/me/profile">返回个人中心</RouterLink></p>
     </section>
     <section v-else-if="!loadFailed" class="panel">

@@ -141,6 +141,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify.ps1 -Browser
 | [测试计划](docs/test/A-用户管理-测试计划.md) / [测试用例](docs/test/A-用户管理-测试用例.md) / [测试报告](docs/test/A-用户管理-测试报告.md) | 分层策略、TC-A-001～078、实际执行结果与缺陷记录 |
 | [完整性验证报告](docs/verify/A-用户管理-完整性验证报告.md) | 交付物清单、需求追踪、接口逐项核对、验收清单与未覆盖项 |
 | [软件工程过程说明](docs/process/A-软件工程过程说明.md) | 过程模型、阶段产物、评审与质量门禁、度量、风险与变更控制 |
+| [第二版迭代记录](docs/process/第二版迭代记录.md) | 认证入口、认领未认证引导的修复说明与验证结果 |
 | [Epic/Feature/Story/Task 思维导图（v3 · CodeArts 风格）](docs/process/项目思维导图-Epic-Feature-Story-Task.md) | 产品 Backlog：4 个 Epic、21 个 Feature、40 个用户故事、103 个 Task；卡片式思维导图（类型徽标/状态/负责人/子项计数），并附 CodeArts 可导入 Excel 与 backlog.csv |
 | [个人报告](docs/reports/A-用户管理.md) | 课程个人成果与贡献边界 |
 | [项目文件结构说明](docs/项目文件结构说明.md) | 目录职责与 A/B/C 文件归属 |

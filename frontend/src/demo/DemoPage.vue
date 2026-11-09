@@ -43,8 +43,12 @@ async function changePost(post, action) {
 
 <template>
   <div class="page-heading"><p class="eyebrow">CAMPUS LOST & FOUND</p><h1>每一份失而复得，<br>从认真核实开始。</h1><p class="muted">提交认领证明，与拾获者沟通，双方确认后完成交接。</p></div>
-  <p class="notice">成员 C 独立验收工作台。账号及物品由本地初始化命令提供，校园认证为演示认证。注册、校园身份绑定、发布与图片上传由 A/B 后续接入。</p>
+  <p class="notice">当前为完整演示版：注册、登录、校园身份绑定、个人中心已接入；发布与图片上传由成员 B 接入。</p>
   <p v-if="error" class="error" role="alert">{{ error }}</p>
+  <p v-if="session.user && !session.user.is_campus_verified" class="notice" style="border-color:#f0c36d;background:#fff8e1">
+    当前账号未完成校园身份认证，暂时无法申请认领或发布信息。
+    <RouterLink class="button small" to="/me/campus-binding?next=/demo">去完成校园身份认证</RouterLink>
+  </p>
   <div v-if="!session.user" class="login-grid">
     <form class="panel login-panel" @submit.prevent="login"><h2>登录演示账号</h2><label for="demo-user">选择身份</label><select id="demo-user" v-model="username"><option value="applicant">applicant · 失主小周</option><option value="publisher">publisher · 拾获者小林</option><option value="competitor">competitor · 竞争申请者</option><option value="unverified">unverified · 未认证同学</option></select><label for="demo-password">演示密码</label><input id="demo-password" v-model="password" type="password" autocomplete="current-password" required minlength="8" maxlength="64" placeholder="初始化命令输出的密码"><button :disabled="busy">{{ busy ? '登录中…' : '登录' }}</button><p class="muted">密码由 seed_demo 输出。刷新页面后需要重新登录。</p></form>
     <section class="intro-list"><article><span>01</span><div><h2>提交可核实的细节</h2><p>公开信息之外的特征，通过私有申请告诉拾获者。</p></div></article><article><span>02</span><div><h2>在申请内沟通</h2><p>核实物品和交接安排，会话只对双方开放。</p></div></article><article><span>03</span><div><h2>双方各自确认</h2><p>实际交接后各自确认，单方确认不会完成认领。</p></div></article></section>

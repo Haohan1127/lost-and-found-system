@@ -97,7 +97,8 @@ async function save() {
           <div><dt>注册时间</dt><dd>{{ datetime(profile.created_at) }}</dd></div>
           <div><dt>认证状态</dt><dd>{{ profile.is_campus_verified ? '演示认证' : '未认证' }}</dd></div>
         </dl>
-        <p class="muted">认证状态仅供本系统演示使用，不是真实学校认证。<RouterLink to="/me/campus-binding">校园身份绑定</RouterLink></p>
+        <p class="muted">认证状态仅供本系统演示使用，不是真实学校认证。</p>
+        <p><RouterLink class="button" to="/me/campus-binding">{{ profile.is_campus_verified ? '查看校园身份绑定' : '校园身份绑定（去认证）' }}</RouterLink></p>
       </section>
       <form class="panel" novalidate @submit.prevent="save">
         <h2>编辑资料</h2>

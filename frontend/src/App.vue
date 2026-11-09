@@ -33,6 +33,7 @@ watch(() => session.token, token => {
           <RouterLink to="/me/claims?role=applicant">我的认领</RouterLink>
           <RouterLink to="/me/claims?role=publisher">收到的申请</RouterLink>
           <RouterLink to="/me/profile">个人中心</RouterLink>
+          <RouterLink to="/me/campus-binding">校园身份认证</RouterLink>
         </template>
         <template v-else>
           <RouterLink to="/login">登录</RouterLink>

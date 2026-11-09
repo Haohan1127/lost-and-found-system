@@ -26,10 +26,12 @@ const blocked = computed(() => {
   if (!post.value) return ''
   if (post.value.post_type !== 'found') return '认领申请只针对招领信息。请先从匹配结果找到对应的招领物品。'
   if (post.value.publisher.id === session.user?.id) return '你不能认领自己发布的物品。'
-  if (!session.user?.is_campus_verified) return '发起认领前请完成校园身份绑定。当前演示账号未认证，请切换至已演示认证的账号。'
+  if (!session.user?.is_campus_verified) return '当前演示账号未认证，无法申请认领。请先完成校园身份绑定（演示认证）。'
   if (post.value.status !== 'open') return '该物品当前不接受新的认领申请。'
   return ''
 })
+const needsVerification = computed(() => Boolean(session.user) && !session.user.is_campus_verified)
+const bindingTarget = computed(() => ({ path: '/me/campus-binding', query: { next: route.fullPath } }))
 async function submit(verification_text) {
   if (busy.value || blocked.value || uncertain.value) return
   busy.value = true
@@ -51,7 +53,10 @@ async function submit(verification_text) {
   <p v-if="error" class="error" role="alert">{{ error }}</p>
   <template v-if="post">
     <article class="panel source-card"><span class="badge">{{ postLabels[post.status] }}</span><h2>{{ post.title }}</h2><p>{{ post.description }}</p><p class="muted">{{ post.location.name }} · {{ datetime(post.occurred_at) }} · {{ post.publisher.nickname }}</p><p v-if="post.handover_note">交接说明：{{ post.handover_note }}</p></article>
-    <p v-if="blocked" class="notice">{{ blocked }}</p>
+    <div v-if="blocked" class="notice">
+      <p>{{ blocked }}</p>
+      <RouterLink v-if="needsVerification" class="button" :to="bindingTarget">去完成校园身份认证</RouterLink>
+    </div>
     <p v-else-if="uncertain" class="notice">提交结果未确认，请先在 <RouterLink to="/me/claims?role=applicant">我的认领</RouterLink> 中检查是否已生成申请。</p>
     <section v-else class="panel"><ClaimForm :busy="busy" @submit="submit" /></section>
   </template>
