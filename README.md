@@ -46,7 +46,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\setup.ps1
 
 初始化会：创建项目内 `.venv`、安装后端依赖（默认清华 PyPI 镜像，可用 `PIP_INDEX_URL` 覆盖）、`npm ci`、执行迁移、生成演示数据与演示校园身份。
 
-随后在两个终端分别启动（或使用下面的“一键启动”）：
+随后在两个终端分别启动：
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\start-backend.ps1   # http://127.0.0.1:8000
@@ -55,18 +55,38 @@ powershell -ExecutionPolicy Bypass -File .\scripts\start-frontend.ps1  # http://
 
 打开 <http://127.0.0.1:5173>，未登录时进入登录页（`/login`），可注册新账号或使用演示账号。前端开发服务器把 `/api` 代理到 `127.0.0.1:8000`。
 
-### 2.1 一键启动（Windows 桌面）
+### 2.1 内部启动（不提供 .bat 启动器）
 
-项目文件夹位于桌面：`C:\Users\haoha_99nt8ny\Desktop\校园失物招领系统`。不用命令行即可运行：
+本版起不再提供桌面/项目根目录的 `.bat` 启动器，统一在项目内部启动，三种方式任选：
 
-| 双击文件 | 作用 |
-|---|---|
-| `启动失物招领.bat`（项目根目录 / 桌面同名文件） | 打开“后端 8000”“前端 5173”两个窗口，等待就绪后自动打开 <http://127.0.0.1:5173> |
-| `停止失物招领.bat`（项目根目录 / 桌面同名文件） | 结束占用 8000、5173 的进程并关闭两个服务窗口 |
-| `打开代码-PyCharm.bat`（项目根目录 / 桌面同名文件） | 用 PyCharm 打开本工程；已配置 `.venv` Python 解释器，并在 `.run/` 提供“后端 Django (8000) / 前端 Vite (5173)”运行配置（若 PyCharm 运行下拉框未显示，直接双击一键启动脚本即可） |
+**方式一：仓库脚本（两个终端，在项目根目录执行）**
 
-> 桌面上的 `启动失物招领系统.bat`、`停止失物招领系统.bat`、`打开失物招领代码.bat` 是对上述脚本的快捷入口。换机器或移动文件夹后，若提示找不到路径，直接在项目根目录双击同名脚本即可。
->
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\start-backend.ps1
+powershell -ExecutionPolicy Bypass -File .\scripts\start-frontend.ps1
+```
+
+**方式二：直接命令**
+
+```powershell
+# 终端 1（项目根目录）
+.\.venv\Scripts\python.exe backend\manage.py runserver 127.0.0.1:8000
+
+# 终端 2
+Set-Location frontend
+npm.cmd run dev -- --host 127.0.0.1 --port 5173
+```
+
+**方式三：PyCharm 运行配置**
+
+在 PyCharm 右上角运行下拉框中选择「后端 Django (8000)」和「前端 Vite (5173)」（`.run/` 中的本机配置）。
+
+停止服务：在对应终端按 `Ctrl+C`；若端口仍被占用，可查看并结束占用进程：
+
+```powershell
+Get-NetTCPConnection -LocalPort 8000,5173 -State Listen | Select-Object LocalPort,OwningProcess
+```
+
 > PyCharm 工程配置（`.idea/`、`.run/`、`.iml`）是本机配置，已加入 `.gitignore`，不影响代码仓库内容。
 
 ### 2.2 演示数据
@@ -145,6 +165,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify.ps1 -Browser
 | [软件工程过程说明](docs/process/A-软件工程过程说明.md) | 过程模型、阶段产物、评审与质量门禁、度量、风险与变更控制 |
 | [第二版迭代记录](docs/process/第二版迭代记录.md) | 认证入口、认领未认证引导的修复说明与验证结果 |
 | [第三版迭代记录](docs/process/第三版迭代记录.md) | 契约 v0.3 变更说明；A 新增“我的发布”接口与页面、身份权限相关调整 |
+| [第四版迭代记录](docs/process/第四版迭代记录.md) | 移除 .bat 启动器，统一改为内部脚本/命令/PyCharm 启动 |
 | [Epic/Feature/Story/Task 思维导图（v3 · CodeArts 风格）](docs/process/项目思维导图-Epic-Feature-Story-Task.md) | 产品 Backlog：4 个 Epic、21 个 Feature、40 个用户故事、103 个 Task；卡片式思维导图（类型徽标/状态/负责人/子项计数），并附 CodeArts 可导入 Excel 与 backlog.csv |
 | [个人报告](docs/reports/A-用户管理.md) | 课程个人成果与贡献边界 |
 | [项目文件结构说明](docs/项目文件结构说明.md) | 目录职责与 A/B/C 文件归属 |
