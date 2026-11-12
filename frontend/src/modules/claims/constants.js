@@ -8,7 +8,12 @@ export function availableActions(claim, userId) {
   const applicant = claim.applicant_id === userId
   const publisher = claim.publisher.id === userId
   if (!applicant && !publisher) return []
-  if (claim.status === 'pending') return publisher ? ['accept', 'reject'] : ['cancel']
+  if (claim.status === 'pending') {
+    // 物品已被其他申请同意/进入交接时，发布者不能再审核这条待处理申请；
+    // 申请者仍在 pending 状态时可以撤回。
+    if (publisher && claim.post && claim.post.status !== 'open') return []
+    return publisher ? ['accept', 'reject'] : ['cancel']
+  }
   if (claim.status !== 'accepted') return []
   const confirmed = applicant ? claim.applicant_confirmed_at : claim.publisher_confirmed_at
   const result = confirmed ? [] : ['confirm-handover']

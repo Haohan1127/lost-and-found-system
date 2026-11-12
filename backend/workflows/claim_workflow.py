@@ -55,8 +55,11 @@ def accept_claim(user, claim_id, decision_note=None):
     require_publisher(claim, user)
     if claim.status == "accepted":
         return claim
-    if claim.status != "pending" or post.status != "open":
-        conflict()
+    if claim.status != "pending":
+        conflict("该申请已结束，不能重复同意")
+    if post.status != "open":
+        # 同一物品只允许一条申请被同意；其他申请在同意时已自动关闭。
+        conflict("该物品已有其他申请被同意或已进入交接，不能再次同意")
     claim.status = "accepted"
     claim.decision_note = decision_note
     claim.save(update_fields=["status", "decision_note", "updated_at"])

@@ -20,6 +20,11 @@ describe('认领操作权限与状态', () => {
     expect(availableActions(accepted, '1')).toEqual([])
     expect(availableActions(accepted, '2')).toEqual(['confirm-handover'])
   })
+  it('物品已交接/完成时，发布者不能再审核遗留的待处理申请', () => {
+    const stale = { ...claim, post: { status: 'in_handover' } }
+    expect(availableActions(stale, '2')).toEqual([])
+    expect(availableActions(stale, '1')).toEqual(['cancel'])
+  })
   it.each(['closed', 'completed', 'cancelled', 'rejected'])('终态 %s 没有写操作', status => {
     expect(availableActions({ ...claim, status }, '1')).toEqual([])
     expect(availableActions({ ...claim, status }, '2')).toEqual([])

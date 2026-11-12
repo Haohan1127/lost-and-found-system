@@ -166,6 +166,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify.ps1 -Browser
 | [第二版迭代记录](docs/process/第二版迭代记录.md) | 认证入口、认领未认证引导的修复说明与验证结果 |
 | [第三版迭代记录](docs/process/第三版迭代记录.md) | 契约 v0.3 变更说明；A 新增“我的发布”接口与页面、身份权限相关调整 |
 | [第四版迭代记录](docs/process/第四版迭代记录.md) | 移除 .bat 启动器，统一改为内部脚本/命令/PyCharm 启动 |
+| [第五版迭代记录](docs/process/第五版迭代记录.md) | 同一物品只能同意一条申请：关闭其他申请、补齐前端按钮/提示/关闭原因，后端 112/前端 56 回归通过 |
 | [Epic/Feature/Story/Task 思维导图（v3 · CodeArts 风格）](docs/process/项目思维导图-Epic-Feature-Story-Task.md) | 产品 Backlog：4 个 Epic、21 个 Feature、40 个用户故事、103 个 Task；卡片式思维导图（类型徽标/状态/负责人/子项计数），并附 CodeArts 可导入 Excel 与 backlog.csv |
 | [个人报告](docs/reports/A-用户管理.md) | 课程个人成果与贡献边界 |
 | [项目文件结构说明](docs/项目文件结构说明.md) | 目录职责与 A/B/C 文件归属 |

@@ -1,4 +1,5 @@
 from unittest.mock import patch
+from users.models import User
 from workflows import claim_workflow, post_workflow
 from claims.models import Claim
 from posts import services as post_services
@@ -15,6 +16,23 @@ class HandoverTests(ClaimsTestCase):
         second.refresh_from_db()
         self.assertEqual((second.status, second.close_reason), ("closed", "another_claim_accepted"))
         self.assert_error(self.action(second, "accept"), 409, "STATE_CONFLICT")
+
+    def test_accept_closes_all_competitors_and_blocks_repeated_accept(self):
+        first = self.apply()
+        second = self.apply(self.other)
+        third_user = User.objects.create_user(username="third", password="test-only-123", nickname="第三方",
+                                              is_campus_verified=True, verification_mode="demo")
+        third = self.apply(third_user)
+        result = self.action(first, "accept")
+        self.assertEqual(result.status_code, 200, result.data)
+        for claim in (second, third):
+            claim.refresh_from_db()
+            self.assertEqual((claim.status, claim.close_reason), ("closed", "another_claim_accepted"))
+        self.assertEqual(Claim.objects.filter(post=self.post, status="pending").count(), 0)
+        self.assertEqual(Claim.objects.filter(post=self.post, status="accepted").count(), 1)
+        repeated = self.action(second, "accept")
+        self.assert_error(repeated, 409, "STATE_CONFLICT")
+        self.assertIn("该申请已结束", repeated.data["message"])
 
     def test_accept_repeat_does_not_replace_note(self):
         claim = self.apply()

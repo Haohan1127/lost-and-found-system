@@ -5,7 +5,7 @@ import { errorText } from '../../../shared/http.js'
 import { datetime } from '../../../shared/utils/datetime.js'
 import BasePagination from '../../../shared/components/BasePagination.vue'
 import { listClaims } from '../api.js'
-import { claimLabels } from '../constants.js'
+import { claimLabels, closeLabels } from '../constants.js'
 
 const route = useRoute(), router = useRouter()
 const role = computed(() => route.query.role || 'applicant')
@@ -30,6 +30,7 @@ function changePage(value) { router.replace({ query: { ...route.query, page: Str
 
 <template>
   <div class="page-heading"><p class="eyebrow">MY CLAIMS</p><h1>{{ role === 'applicant' ? '我的认领' : '收到的申请' }}</h1><p class="muted">申请、核实和交接进度，都可以在这里查看。</p></div>
+  <p class="muted">同一物品只允许一条申请被同意；同意其中一条后，其他待处理申请会自动关闭并保留记录，不能重复同意。</p>
   <div class="tabs"><RouterLink to="/me/claims?role=applicant" :class="{ selected: role === 'applicant' }">我申请的</RouterLink><RouterLink to="/me/claims?role=publisher" :class="{ selected: role === 'publisher' }">我收到的</RouterLink></div>
   <div class="toolbar"><label>申请状态 <select :value="status" @change="filter($event.target.value)"><option value="">全部状态</option><option v-for="(label, value) in claimLabels" :key="value" :value="value">{{ label }}</option></select></label><button class="secondary" :disabled="loading" @click="load">刷新列表</button></div>
   <p v-if="error" class="error" role="alert">{{ error }}</p>
@@ -37,7 +38,7 @@ function changePage(value) { router.replace({ query: { ...route.query, page: Str
   <div v-else-if="!data.items.length && !error" class="panel empty">暂时没有符合条件的申请。<RouterLink to="/demo">去看看演示物品</RouterLink></div>
   <div class="claim-list">
     <RouterLink v-for="claim in data.items" :key="claim.id" :to="`/claims/${claim.id}`" class="panel claim-row">
-      <div><span class="badge" :data-status="claim.status">{{ claimLabels[claim.status] }}</span><h2>{{ claim.post.title }}</h2><p class="muted">{{ role === 'applicant' ? `发布者：${claim.publisher.nickname}` : `申请者：${claim.applicant.nickname}` }} · {{ datetime(claim.created_at) }}</p></div><span class="row-arrow">查看进度 →</span>
+      <div><span class="badge" :data-status="claim.status">{{ claimLabels[claim.status] }}</span><h2>{{ claim.post.title }}</h2><p class="muted">{{ role === 'applicant' ? `发布者：${claim.publisher.nickname}` : `申请者：${claim.applicant.nickname}` }} · {{ datetime(claim.created_at) }}</p><p v-if="claim.close_reason" class="muted">关闭原因：{{ closeLabels[claim.close_reason] }}</p></div><span class="row-arrow">查看进度 →</span>
     </RouterLink>
   </div>
   <BasePagination v-if="!error" :page="data.page" :total-pages="data.total_pages" :total="data.total" :disabled="loading" @change="changePage" />
